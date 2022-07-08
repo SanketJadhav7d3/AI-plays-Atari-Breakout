@@ -8,6 +8,8 @@ from tiles import Tiles
 import neat
 import os
 from pygame.locals import *
+from player_block import AllPaddles
+
 
 pygame.init()
 
@@ -29,8 +31,8 @@ class Breakout:
         # tiles sprites group
         self.tiles = Tiles(self.window)
 
-        # player sprite
-        self.player = Player(self.window)
+        # player sprites
+        self.player = Player(window)
         self.generation = 0
 
         # all sprites group
@@ -119,7 +121,7 @@ class Breakout:
                 # move right
                 self.player.move_right()
 
-            if self.score == 200 or ball_rect.top >= self.H - 100:
+            if self.score == 200 or ball_rect.bottom >= self.H - 90:
                 # calculate the fitness
                 genome.fitness += self.score
                 break
