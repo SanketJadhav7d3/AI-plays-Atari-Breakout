@@ -31,13 +31,10 @@ class Breakout:
         # tiles sprites group
         self.tiles = Tiles(self.window)
 
-        # player sprites
-        self.player = Player(window)
         self.generation = 0
 
         # all sprites group
         self.all_sprites = pygame.sprite.Group()
-        self.all_sprites.add(self.player)
         self.all_sprites.add(self.ball)
         self.all_sprites.add(self.tiles.tiles)
 
@@ -59,13 +56,14 @@ class Breakout:
 
         self.ball.update()
 
-        # player hits the ball
-        if pygame.sprite.collide_rect(self.ball, self.player):
-            self.ball.change_direction()
+        # check for the collision between the player sprites and the ball
+        # if pygame.sprite.collide_rect(self.ball, self.player):
+            # self.ball.change_direction()
 
         if pygame.sprite.spritecollide(self.ball, self.tiles.tiles, dokill=True):
             self.score += 10
             self.ball.change_direction()
+
 
     def test_ai(self):
         running = True
@@ -84,12 +82,15 @@ class Breakout:
             self.loop()
         pygame.quit()
 
-    def train_ai(self, genome, config):
+    def train_ai(self, genomes, config):
 
         running = True
         clock = pygame.time.Clock()
 
-        net = neat.nn.FeedForwardNetwork.create(genome, config)
+        # net = neat.nn.FeedForwardNetwork.create(genome, config)
+        self.all_players = AllPaddles(self.window, genomes, config)
+
+        self.all_sprites.add(self.all_players.paddles_sprites)
 
         self.generation += 1
 
@@ -102,28 +103,19 @@ class Breakout:
                 if event.type == pygame.quit:
                     running = false
 
-            player_rect = self.player.rect
             ball_rect = self.ball.rect
 
-            # input values
-            # player paddle center x, ball.center x, ball.center y
-            output = net.activate((player_rect.center[0], ball_rect.center[0], ball_rect.center[1]))
+            for genome in self.all_players.paddles_sprites:
+                output = genome.calculate_output(ball_rect)
 
-            output_max = output.index(max(output))
+                decision = output.index(max(output))
 
-            if output_max == 0:
-                # stay still
-                pass
-            elif output_max == 1:
-                # move left
-                self.player.move_left()
-            else:
-                # move right
-                self.player.move_right()
+                genome.move(decision)
 
             if self.score == 200 or ball_rect.bottom >= self.H - 90:
                 # calculate the fitness
-                genome.fitness += self.score
+                # genome.fitness += self.score
+                print("End of the true generation")
                 break
 
             self.loop()
@@ -132,11 +124,8 @@ class Breakout:
 
 def eval_genomes(genomes, config):
 
-    for genome_id, genome in genomes:
-
-        genome.fitness = 0
-        game = Breakout(W, H)
-        game.train_ai(genome, config)
+    game = Breakout(W, H)
+    game.train_ai(genomes, config)
 
 
 def run(config_path):

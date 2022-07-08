@@ -23,3 +23,6 @@ class Ball(pygame.sprite.Sprite):
 
     def change_direction(self):
         self.vel_y = -self.vel_y
+
+    def get_center(self):
+        return self.rect.center
