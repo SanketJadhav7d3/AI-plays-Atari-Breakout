@@ -18,6 +18,17 @@ class AllPaddles:
             genome.fitness = 0
             self.paddles_sprites.add(Player.create_paddle(self.window, genome, genome_id, config))
 
+    def ballcollide(self, ball, score):
+        if pygame.sprite.spritecollide(ball, self.paddles_sprites, dokill=False):
+            # remove all the sprites execpt the ones from sprite_list
+            sprite_list = pygame.sprite.spritecollide(ball, self.paddles_sprites, dokill=False)
+            for sprite in self.paddles_sprites:
+                if sprite not in sprite_list:
+                    sprite.kill()
+                    continue
+            ball.change_direction()
+
+
 
 class Player(pygame.sprite.Sprite):
 
@@ -32,7 +43,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect(center=(self.win_width/2, self.win_height - 100))
         self.config = config
 
-        # net object
+        # Network object
         self.net = neat.nn.FeedForwardNetwork.create(self.genome, self.config)
 
     def calculate_output(self, ball_rect):
@@ -77,7 +88,7 @@ class Player(pygame.sprite.Sprite):
         return self.rect.center[0]
 
     def update_genome(self, score):
-        self.genome += score
+        self.genome.fitness += score
 
     @staticmethod
     def create_paddle(window, genome, genome_id, config):

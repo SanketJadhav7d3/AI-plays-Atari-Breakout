@@ -60,6 +60,10 @@ class Breakout:
         # if pygame.sprite.collide_rect(self.ball, self.player):
             # self.ball.change_direction()
 
+        # contains the sprites which hit the ball 
+        if self.all_players.ballcollide(self.ball, self.score):
+            self.ball.change_direction()
+
         if pygame.sprite.spritecollide(self.ball, self.tiles.tiles, dokill=True):
             self.score += 10
             self.ball.change_direction()
@@ -115,7 +119,6 @@ class Breakout:
             if self.score == 200 or ball_rect.bottom >= self.H - 90:
                 # calculate the fitness
                 # genome.fitness += self.score
-                print("End of the true generation")
                 break
 
             self.loop()
