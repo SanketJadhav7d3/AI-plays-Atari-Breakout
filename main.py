@@ -96,10 +96,6 @@ class Breakout:
 
         self.all_sprites.add(self.all_players.paddles_sprites)
 
-        self.generation += 1
-
-        pygame.display.set_caption("Generation: {}".format(self.generation))
-
         while running:
             clock.tick(60)
 
@@ -117,8 +113,8 @@ class Breakout:
                 genome.move(decision)
 
             if self.score == 200 or ball_rect.bottom >= self.H - 90:
-                # calculate the fitness
-                # genome.fitness += self.score
+                for genome in self.all_players.paddles_sprites:
+                    genome.update_genome(self.score)
                 break
 
             self.loop()
