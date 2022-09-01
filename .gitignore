@@ -1,4 +1,5 @@
 
 git rm --cached neat-checkpoint*
 neat-checkpoint-*
+git rm --cached __pycache__
 __pycache__
