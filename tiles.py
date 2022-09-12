@@ -4,7 +4,6 @@ import numpy as np
 
 
 class Tile(pygame.sprite.Sprite):
-
     def __init__(self, x=0, y=0):
         super(Tile, self).__init__()
         self.surf = pygame.Surface((80, 10)).convert_alpha()
@@ -14,6 +13,7 @@ class Tile(pygame.sprite.Sprite):
     @staticmethod
     def create_tile(x, y):
         return Tile(x, y)
+
 
 class Tiles:
 

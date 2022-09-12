@@ -68,7 +68,6 @@ class Breakout:
             self.score += 10
             self.ball.change_direction()
 
-
     def test_ai(self):
         running = True
         clock = pygame.time.Clock()
@@ -120,7 +119,6 @@ class Breakout:
             self.loop()
             self.draw()
 
-
 def eval_genomes(genomes, config):
 
     game = Breakout(W, H)
@@ -132,7 +130,6 @@ def run(config_path):
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
                          config_path)
-
     # population
     p = neat.Population(config)
 
