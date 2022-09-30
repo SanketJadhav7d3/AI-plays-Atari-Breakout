@@ -2,14 +2,12 @@
 
 import pygame
 from ball import Ball
-from player_block import Player
 from pygame.locals import *
 from tiles import Tiles
 import neat
 import os
-from pygame.locals import *
 from player_block import AllPaddles
-
+import cv2 as cv
 
 pygame.init()
 
@@ -123,7 +121,7 @@ def eval_genomes(genomes, config):
 
     game = Breakout(W, H)
     game.train_ai(genomes, config)
-
+     
 
 def run(config_path):
     # load configuration
