@@ -1,6 +1,7 @@
 
 import pygame
 from pygame.locals import *
+import numpy as np
 import neat
 
 
@@ -14,11 +15,12 @@ class AllPaddles:
         # contains all the sprites for all the players
         # each sprite contains the genome_id
         self.paddles_sprites = pygame.sprite.Group()
+
         for genome_id, genome in self.genomes:
             genome.fitness = 0
             self.paddles_sprites.add(Player.create_paddle(self.window, genome, genome_id, config))
 
-    def ballcollide(self, ball, score):
+    def ballcollide(self, ball):
         if pygame.sprite.spritecollide(ball, self.paddles_sprites, dokill=False):
             # remove all the sprites execpt the ones from sprite_list
             sprite_list = pygame.sprite.spritecollide(ball, self.paddles_sprites, dokill=False)
@@ -29,7 +31,6 @@ class AllPaddles:
             ball.change_direction()
 
 
-
 class Player(pygame.sprite.Sprite):
 
     def __init__(self, window, genome, genome_id, config):
@@ -38,7 +39,7 @@ class Player(pygame.sprite.Sprite):
         self.genome_id = genome_id
         self.window = window
         self.genome = genome
-        self.surf.fill((255, 255, 255))
+        self.surf.fill(tuple(np.random.choice(range(256), size=3)))
         self.win_width, self.win_height = self.window.get_size()
         self.rect = self.surf.get_rect(center=(self.win_width/2, self.win_height - 100))
         self.config = config

@@ -26,3 +26,7 @@ class Ball(pygame.sprite.Sprite):
 
     def get_center(self):
         return self.rect.center
+
+
+if __name__ == "__main__":
+    pass

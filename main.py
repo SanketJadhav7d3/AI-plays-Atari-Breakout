@@ -7,7 +7,6 @@ from tiles import Tiles
 import neat
 import os
 from player_block import AllPaddles
-import cv2 as cv
 
 pygame.init()
 
@@ -21,6 +20,7 @@ class Breakout:
         self.W = W
         self.H = H
         self.window = pygame.display.set_mode((self.W, self.H))
+        pygame.display.set_caption("Atari Breakout")
         self.score = 0
 
         # ball sprite
@@ -59,7 +59,7 @@ class Breakout:
             # self.ball.change_direction()
 
         # contains the sprites which hit the ball 
-        if self.all_players.ballcollide(self.ball, self.score):
+        if self.all_players.ballcollide(self.ball):
             self.ball.change_direction()
 
         if pygame.sprite.spritecollide(self.ball, self.tiles.tiles, dokill=True):
@@ -117,11 +117,11 @@ class Breakout:
             self.loop()
             self.draw()
 
-def eval_genomes(genomes, config):
 
+def eval_genomes(genomes, config):
     game = Breakout(W, H)
     game.train_ai(genomes, config)
-     
+
 
 def run(config_path):
     # load configuration
@@ -140,6 +140,7 @@ def run(config_path):
     winner = p.run(eval_genomes, 40)
 
     print("we have got the winner: {}".format(winner))
+
 
 if __name__ == '__main__':
     local_dir = os.path.dirname(__file__)
