@@ -66,9 +66,10 @@ class Breakout:
             self.score += 10
             self.ball.change_direction()
 
-    def test_ai(self):
+    def test_ai(self, genome):
         running = True
         clock = pygame.time.Clock()
+
         while running:
             # set fps to 60
             clock.tick(60)
@@ -77,7 +78,6 @@ class Breakout:
                     running = False
 
             pressed_keys = pygame.mouse.get_pressed()
-            self.player.move(pressed_keys)
 
             self.draw()
             self.loop()
