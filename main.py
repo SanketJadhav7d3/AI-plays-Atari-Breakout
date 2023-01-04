@@ -1,4 +1,3 @@
-#!/Users/sanketjadhav/opt/miniconda3/bin/python
 
 import pygame
 from ball import Ball
@@ -7,6 +6,7 @@ from tiles import Tiles
 import neat
 import os
 from player_block import AllPaddles
+import random
 
 pygame.init()
 
@@ -86,7 +86,16 @@ class Breakout:
     def train_ai(self, genomes, config):
 
         running = True
+
         clock = pygame.time.Clock()
+
+        rand_x = random.randrange(100, 450)
+
+        # random ball x position
+        self.ball.rect = self.ball.surf.get_rect(center=(rand_x, 200))
+
+        # random ball direction
+        self.ball.vel_x = random.choice([4, -4])
 
         # net = neat.nn.FeedForwardNetwork.create(genome, config)
         self.all_players = AllPaddles(self.window, genomes, config)
@@ -130,6 +139,8 @@ def run(config_path):
                          config_path)
     # population
     p = neat.Population(config)
+
+    # p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-23')
 
     # Add a stdout reporter to show progress in the terminal.
     p.add_reporter(neat.StdOutReporter(True))

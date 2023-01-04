@@ -1,6 +1,7 @@
 
 import pygame
 import math
+import random
 
 
 class Ball(pygame.sprite.Sprite):
@@ -10,14 +11,14 @@ class Ball(pygame.sprite.Sprite):
         self.window = window
         self.surf = pygame.Surface((20, 20)).convert_alpha()
         self.win_width, self.win_height = self.window.get_size()
-        self.rect = self.surf.get_rect(center=(250, 200))
+        self.rect = self.surf.get_rect(center=(random.randrange(100, 450), 200))
         self.vel_x, self.vel_y = 4, 4
         pygame.draw.circle(self.surf, (255, 255, 255), (10, 10), 10)
 
     def update(self):
-        if self.rect.left < 0 or self.rect.right > self.win_width:
+        if self.rect.left <= 0 or self.rect.right > self.win_width:
             self.vel_x = -self.vel_x
-        elif self.rect.top < 0:
+        elif self.rect.top <= 0:
             self.vel_y = -self.vel_y
         self.rect.move_ip(self.vel_x, self.vel_y)
 
