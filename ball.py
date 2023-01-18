@@ -12,7 +12,7 @@ class Ball(pygame.sprite.Sprite):
         self.surf = pygame.Surface((20, 20)).convert_alpha()
         self.win_width, self.win_height = self.window.get_size()
         self.rect = self.surf.get_rect(center=(random.randrange(100, 450), 200))
-        self.vel_x, self.vel_y = 4, 4
+        self.vel_x, self.vel_y = 8, 8
         pygame.draw.circle(self.surf, (255, 255, 255), (10, 10), 10)
 
     def update(self):

@@ -134,13 +134,13 @@ def eval_genomes(genomes, config):
 
 def run(config_path):
     # load configuration
-    config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
-                         neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                         config_path)
+    # config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
+                          #neat.DefaultSpeciesSet, neat.DefaultStagnation,
+                          #config_path)
     # population
-    p = neat.Population(config)
+     #p = neat.Population(config)
 
-    # p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-23')
+    p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-23')
 
     # Add a stdout reporter to show progress in the terminal.
     p.add_reporter(neat.StdOutReporter(True))
