@@ -7,8 +7,11 @@ import neat
 import os
 from player_block import AllPaddles
 import random
+import matplotlib.pyplot as plt
+import numpy as np
 
 pygame.init()
+
 
 W = 500
 H = 650
@@ -89,13 +92,13 @@ class Breakout:
 
         clock = pygame.time.Clock()
 
-        rand_x = random.randrange(100, 450)
+        rand_x = random.randrange(10, 450)
 
         # random ball x position
         self.ball.rect = self.ball.surf.get_rect(center=(rand_x, 200))
 
         # random ball direction
-        self.ball.vel_x = random.choice([4, -4])
+        self.ball.vel_x = random.choice([5, -5])
 
         # net = neat.nn.FeedForwardNetwork.create(genome, config)
         self.all_players = AllPaddles(self.window, genomes, config)
@@ -118,7 +121,7 @@ class Breakout:
 
                 genome.move(decision)
 
-            if self.score == 200 or ball_rect.bottom >= self.H - 90:
+            if self.score >= 800 or ball_rect.bottom >= self.H - 40:
                 for genome in self.all_players.paddles_sprites:
                     genome.update_genome(self.score)
                 break
@@ -135,12 +138,12 @@ def eval_genomes(genomes, config):
 def run(config_path):
     # load configuration
     # config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
-                          #neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                          #config_path)
+                          # neat.DefaultSpeciesSet, neat.DefaultStagnation,
+                          # config_path)
     # population
-     #p = neat.Population(config)
+    # p = neat.Population(config)
 
-    p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-23')
+    p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-32')
 
     # Add a stdout reporter to show progress in the terminal.
     p.add_reporter(neat.StdOutReporter(True))
@@ -149,6 +152,16 @@ def run(config_path):
     p.add_reporter(neat.Checkpointer(1))
 
     winner = p.run(eval_genomes, 40)
+
+    mean_fitness_score = stats.get_fitness_mean()
+
+    plt.plot(np.arange(0, len(mean_fitness_score)), mean_fitness_score)
+
+    plt.xlabel("Generations")
+
+    plt.ylabel("Mean Fitness score")
+
+    plt.show()
 
     print("we have got the winner: {}".format(winner))
 

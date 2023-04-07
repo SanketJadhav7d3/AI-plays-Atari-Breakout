@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
         self.genome = genome
         self.surf.fill(tuple(np.random.choice(range(256), size=3)))
         self.win_width, self.win_height = self.window.get_size()
-        self.rect = self.surf.get_rect(center=(self.win_width/2, self.win_height - 100))
+        self.rect = self.surf.get_rect(center=(self.win_width/2, self.win_height - 50))
         self.config = config
 
         # Network object
