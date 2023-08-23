@@ -65,8 +65,13 @@ class Breakout:
         if self.all_players.ballcollide(self.ball):
             self.ball.change_direction()
 
-        if pygame.sprite.spritecollide(self.ball, self.tiles.tiles, dokill=True):
-            self.score += 10
+        n = pygame.sprite.spritecollide(self.ball, self.tiles.tiles, dokill=True)
+        if n:
+            for _ in range(len(n)):
+                self.score += 10
+            print(n)
+            print("Score:", self.score)
+            print("Remaining targets:", len(self.tiles.tiles))
             self.ball.change_direction()
 
     def test_ai(self, genome):
@@ -92,9 +97,10 @@ class Breakout:
 
         clock = pygame.time.Clock()
 
-        rand_x = random.randrange(10, 450)
+        rand_x = np.random.randint(10, high=450)
 
         # random ball x position
+        print("Ball initial coordiantes: ", rand_x, 200)
         self.ball.rect = self.ball.surf.get_rect(center=(rand_x, 200))
 
         # random ball direction
@@ -154,17 +160,16 @@ def run(config_path):
     winner = p.run(eval_genomes, 40)
 
     mean_fitness_score = stats.get_fitness_mean()
-
+    
     plt.plot(np.arange(0, len(mean_fitness_score)), mean_fitness_score)
 
     plt.xlabel("Generations")
 
     plt.ylabel("Mean Fitness score")
 
-    plt.show()
+    # plt.show()
 
     print("we have got the winner: {}".format(winner))
-
 
 if __name__ == '__main__':
     local_dir = os.path.dirname(__file__)

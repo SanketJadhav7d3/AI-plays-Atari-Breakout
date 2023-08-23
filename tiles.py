@@ -5,7 +5,7 @@ import random
 
 
 class Tile(pygame.sprite.Sprite):
-    def __init__(self, color, x=0, y=0 ):
+    def __init__(self, color, x=0, y=0):
         super(Tile, self).__init__()
         self.surf = pygame.Surface((50, 10)).convert_alpha()
         self.rect = self.surf.get_rect(x=x, y=y)
