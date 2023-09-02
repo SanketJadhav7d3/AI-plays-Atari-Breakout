@@ -9,6 +9,7 @@ from player_block import AllPaddles
 import random
 import matplotlib.pyplot as plt
 import numpy as np
+import visualize
 
 pygame.init()
 
@@ -69,8 +70,7 @@ class Breakout:
         if n:
             for _ in range(len(n)):
                 self.score += 10
-            print(n)
-            print("Score:", self.score)
+            print("Fitness Score:", self.score)
             print("Remaining targets:", len(self.tiles.tiles))
             self.ball.change_direction()
 
@@ -144,8 +144,8 @@ def eval_genomes(genomes, config):
 def run(config_path):
     # load configuration
     # config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
-                          # neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                          # config_path)
+                           # neat.DefaultSpeciesSet, neat.DefaultStagnation,
+                           # config_path)
     # population
     # p = neat.Population(config)
 
@@ -161,12 +161,14 @@ def run(config_path):
 
     mean_fitness_score = stats.get_fitness_mean()
     
-    plt.plot(np.arange(0, len(mean_fitness_score)), mean_fitness_score)
+    # plt.plot(np.arange(0, len(mean_fitness_score)), mean_fitness_score)
 
-    plt.xlabel("Generations")
+    # visualize.draw_net(config, winner, True, show_disabled=False)
+    visualize.plot_stats(stats, ylog=False, view=True)
+    visualize.plot_species(stats, view=True)
 
-    plt.ylabel("Mean Fitness score")
-
+    # plt.xlabel("Generations")
+    # plt.ylabel("Mean Fitness score")
     # plt.show()
 
     print("we have got the winner: {}".format(winner))

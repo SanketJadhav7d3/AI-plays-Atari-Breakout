@@ -67,7 +67,7 @@ class Player(pygame.sprite.Sprite):
             # stay still
             pass
 
-        # don't let thw player get out of the window
+        # don't let the player get out of the window
         if self.rect.right >= self.win_width:
             self.rect.left = self.win_width - 90
 
