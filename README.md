@@ -3,6 +3,12 @@
 
 Trained an AI to play Atari Breakout game using python NEAT.
 
-https://user-images.githubusercontent.com/93857526/187838974-99013525-2f52-4005-b0b5-3da3d402282b.mov
+
+
+
+https://github.com/user-attachments/assets/e6ce91d1-92af-4bd5-8259-850f37b9da01
+
+
+
 
 More about NEAT Algorithm - https://nn.cs.utexas.edu/downloads/papers/stanley.cec02.pdf
