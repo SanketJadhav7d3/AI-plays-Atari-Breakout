@@ -105,10 +105,3 @@ AI-plays-Atari-Breakout/
 ## Contributing
 
 Contributions, issues, and feature requests are welcome! Please fork the repository and create a pull request.
-
----
-
-## License
-
-This project is released under the MIT License.
-
